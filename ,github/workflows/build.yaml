@@ -1,0 +1,51 @@
+name: Terraform Dispatcher
+on:
+  workflow_dispatch:
+    inputs:
+      verb:
+        description: 'Terraform Verb (plan, apply, or destroy)'
+        required: true
+        default: ''
+        options:
+          - plan
+          - apply
+          - destroy
+
+env:
+  AZURE_STORAGE_ACCOUNT_NAME: devops2sources
+  AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+  DEVOPS_AZURE_SSH: ${{ secrets.DEVOPS_AZURE_SSH }}
+  AZURE_FILE_SHARE_NAME: devops-platforms
+  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  TFSTATE_FILE_PATH: azure-vm/main/vm/build/terraform.tfstate
+  TFVARS_FILE_PATH: azure-vm/main/vm/terraform.tfvars
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do repositório
+      uses: actions/checkout@v2
+
+    - name: Provider Login
+      run: bash provider_login.sh
+
+    - name: Terraform files download
+      run: |
+        # az storage directory create --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --name terraform --fail-on-exist
+        az storage file download --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path terraform/terraform.tfstate --dest $TFSTATE_FILE_PATH
+        az storage file download --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path terraform/terraform.tfstate --dest $TFVARS_FILE_PATH
+    - name: Terraform Run
+      env:
+        VERB: ${{ github.event.inputs.verb }}
+      run: |
+        terraform init
+        terraform ${VERB} --auto-approve
+
+    - name: terraform.tfstate upload
+      run: |
+        az storage file upload --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path terraform/terraform.tfstate --source $TFSTATE_FILE_PATH --type file --overwrite
