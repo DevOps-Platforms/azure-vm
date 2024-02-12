@@ -44,7 +44,11 @@ jobs:
         VERB: ${{ github.event.inputs.verb }}
       run: |
         terraform init
-        terraform ${VERB} -auto-approve
+        if [[ $VERB == "plan" ]]; then
+          terraform ${VERB}
+        else
+          terraform ${VERB} -auto-approve
+        fi
 
     - name: terraform.tfstate upload
       run: |
