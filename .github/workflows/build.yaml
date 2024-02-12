@@ -44,7 +44,7 @@ jobs:
         VERB: ${{ github.event.inputs.verb }}
       run: |
         terraform init
-        terraform ${VERB} --auto-approve
+        terraform ${VERB} -auto-approve
 
     - name: terraform.tfstate upload
       run: |
