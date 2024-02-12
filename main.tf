@@ -34,8 +34,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_username        = "${var.DEVOPS_AZURE_ADMIN_USER}"
   network_interface_ids = [azurerm_network_interface.nic[count.index].id]
   admin_ssh_key {
-    username   = "${var.DEVOPS_AZURE_ADMIN_USER}"
-    public_key = "${var.DEVOPS_AZURE_PUBLIC_SSH}"  
+    username   = var.azure_admin_user
+    public_key = var.azure_ssh_public_key  
   }
 }
 
