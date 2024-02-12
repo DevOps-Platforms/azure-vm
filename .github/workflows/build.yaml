@@ -18,6 +18,7 @@ env:
   AZURE_FILE_SHARE_NAME: devops-platforms
   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZURE_CLIENT: ${{ secrets.DEVOPS_AZURE_ADMIN_USER }}
   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   TFSTATE_FILE_PATH: azure-vm/main/vm/build/terraform.tfstate
