@@ -51,5 +51,5 @@ jobs:
           terraform ${VERB} -auto-approve
         fi
         echo "Uploading TF State File..."
-        az storage file upload --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path terraform.tfstate --source $TFSTATE_FILE_PATH
+        az storage file upload --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path $TFSTATE_FILE_PATH --source terraform.tfstate
     
