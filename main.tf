@@ -39,7 +39,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location              = azurerm_resource_group.vm.location
   size                  = "Standard_DS1_v2"
   admin_username        = var.DEVOPS_AZURE_ADMIN_USER
-  network_interface_ids = [azurerm_network_interface.nic.id]
+  network_interface_ids = [azurerm_network_interface.nic[count.index].id]
   admin_ssh_key {
     username   = var.DEVOPS_AZURE_ADMIN_USER
     public_key = var.DEVOPS_AZURE_PUBLIC_SSH
@@ -59,21 +59,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
 }
 
 
-# resource "azurerm_network_interface" "nic" {
-#   count               = 3
-#   name                = "linux-vm-nic-${count.index}"
-#   location            = azurerm_resource_group.vm.location
-#   resource_group_name = azurerm_resource_group.vm.name
-
-#   ip_configuration {
-#     name                          = "internal"
-#     subnet_id                     = azurerm_subnet.general.id
-#     private_ip_address_allocation = "Dynamic"
-#   }
-# }
-
 resource "azurerm_network_interface" "nic" {
-  name                = "linux-vm-nic"
+  count               = 3
+  name                = "linux-vm-nic-${count.index}"
   location            = azurerm_resource_group.vm.location
   resource_group_name = azurerm_resource_group.vm.name
 
