@@ -39,7 +39,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
    os_disk {
     caching              = "ReadWrite"
-    disk_size_gb         = 20
+    disk_size_gb         = 30
     name                 = "os_disk_name"
     storage_account_type = "Standard_LRS"
   }
