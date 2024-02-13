@@ -37,6 +37,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     username   = var.DEVOPS_AZURE_ADMIN_USER
     public_key = var.DEVOPS_AZURE_PUBLIC_SSH
   }
+   os_disk {
+    caching              = "ReadWrite"
+    disk_size_gb         = 20
+    name                 = "os_disk_name"
+    storage_account_type = "Standard_LRS"
+  }
 }
 
 
