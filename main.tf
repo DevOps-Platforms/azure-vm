@@ -17,11 +17,18 @@ resource "azurerm_virtual_network" "vm-network" {
 }
 
 
-resource "azurerm_subnet" "subnet1" {
+resource "azurerm_subnet" "bastion" {
   name                 = "AzureBastionSubnet"
   resource_group_name  = azurerm_resource_group.vm.name
   virtual_network_name = azurerm_virtual_network.vm-network.name
   address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_subnet" "general" {
+  name                 = "vm-linux-lab-subnet"
+  resource_group_name  = azurerm_resource_group.vm.name
+  virtual_network_name = azurerm_virtual_network.vm-network.name
+  address_prefixes     = ["10.0.2.0/24"]
 }
 
 
@@ -60,7 +67,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.subnet1.id
+    subnet_id                     = azurerm_subnet.general.id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -86,7 +93,7 @@ resource "azurerm_network_security_group" "nsg" {
 
 
 resource "azurerm_subnet_network_security_group_association" "nsga" {
-  subnet_id                 = azurerm_subnet.subnet1.id
+  subnet_id                 = azurerm_subnet.general.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
@@ -105,7 +112,10 @@ resource "azurerm_bastion_host" "bastion_host" {
 
   ip_configuration {
     name                 = "configuration"
-    subnet_id            = azurerm_subnet.subnet1.id
+    subnet_id            = azurerm_subnet.bastion.id
     public_ip_address_id = azurerm_public_ip.bastion_ip.id
   }
+  depends_on = [
+    azurerm_subnet.bastion,
+  ]
 }
