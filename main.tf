@@ -106,6 +106,6 @@ resource "azurerm_bastion_host" "bastion_host" {
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.subnet1.id
-    public_ip_address_id = azurerm_public_ip.bastion-vm-linux.id
+    public_ip_address_id = azurerm_public_ip.bastion_ip.id
   }
 }
