@@ -53,5 +53,4 @@ jobs:
 
     - name: terraform.tfstate upload
       run: |
-        ls 
-        #az storage file upload --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path terraform.tfstate --source $TFSTATE_FILE_PATH --type file --overwrite
+        az storage file upload --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path terraform.tfstate --source $TFSTATE_FILE_PATH --type file --overwrite
