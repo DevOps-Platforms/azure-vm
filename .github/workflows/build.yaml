@@ -38,19 +38,20 @@ jobs:
     - name: Terraform files download
       run: |
         # az storage directory create --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --name terraform --fail-on-exist
-        # az storage file download --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path terraform/terraform.tfstate --dest $TFSTATE_FILE_PATH
+        az storage file download --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path $TFSTATE_FILE_PATH
         az storage file download --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path $TFVARS_FILE_PATH
-    - name: Terraform Run
-      env:
-        VERB: ${{ github.event.inputs.verb }}
-      run: |
-        terraform init
-        if [[ $VERB == "plan" ]]; then
-          terraform ${VERB}
-        else
-          terraform ${VERB} -auto-approve
-        fi
         ls
-        echo "Uploading TF State File..."
-        az storage file upload --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path $TFSTATE_FILE_PATH --source terraform.tfstate
+    # - name: Terraform Run
+    #   env:
+    #     VERB: ${{ github.event.inputs.verb }}
+    #   run: |
+    #     terraform init
+    #     if [[ $VERB == "plan" ]]; then
+    #       terraform ${VERB}
+    #     else
+    #       terraform ${VERB} -auto-approve
+    #     fi
+    #     ls
+    #     echo "Uploading TF State File..."
+    #     az storage file upload --account-name $AZURE_STORAGE_ACCOUNT_NAME --account-key $AZURE_STORAGE_ACCOUNT_KEY --share-name $AZURE_FILE_SHARE_NAME --path $TFSTATE_FILE_PATH --source terraform.tfstate
     
