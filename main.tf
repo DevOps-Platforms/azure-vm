@@ -40,7 +40,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
    os_disk {
     caching              = "ReadWrite"
     disk_size_gb         = 30
-    name                 = "linux_vm_lab"
+    name                 = "linux_vm_lab-${count.index}"
     storage_account_type = "Standard_LRS"
   }
    source_image_reference {
