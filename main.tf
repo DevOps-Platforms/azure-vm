@@ -89,3 +89,23 @@ resource "azurerm_subnet_network_security_group_association" "nsga" {
   subnet_id                 = azurerm_subnet.subnet1.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
+
+resource "azurerm_public_ip" "bastion_ip" {
+  name                = "bastion-vm-linux"
+  location            = azurerm_resource_group.vm.location
+  resource_group_name = azurerm_resource_group.vm.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+resource "azurerm_bastion_host" "bastion_host" {
+  name                = "bastion-host-vm-linux"
+  location            = azurerm_resource_group.vm.location
+  resource_group_name = azurerm_resource_group.vm.name
+
+  ip_configuration {
+    name                 = "configuration"
+    subnet_id            = azurerm_subnet.subnet1.id
+    public_ip_address_id = azurerm_public_ip.bastion_ip.id
+  }
+}
