@@ -108,6 +108,8 @@ resource "azurerm_bastion_host" "bastion_host" {
   name                = "bastion-host-vm-linux"
   location            = azurerm_resource_group.vm.location
   resource_group_name = azurerm_resource_group.vm.name
+  sku                 = "Standard"
+  tunneling_enabled   = true
 
   ip_configuration {
     name                 = "configuration"
