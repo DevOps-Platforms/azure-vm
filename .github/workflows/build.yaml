@@ -31,6 +31,8 @@ jobs:
     steps:
     - name: Checkout do repositório
       uses: actions/checkout@v3
+      with:
+        node-version: '20'
 
     - name: Provider Login
       run: bash provider_login.sh
