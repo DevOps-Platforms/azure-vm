@@ -9,59 +9,16 @@ module "vm" {
 
 }
 
-variable "vms" {
-  type = map(object({
-    name                  = string
-    rg                    = string
-    location              = string
-    size                  = number
-    adminuser             = string
-    nicname               = string
-    ssh                   = string
-    caching               = string
-    diskgb                = number
-    diskname              = string
-    storagetipe           = string
-    publisher             = string
-    offer                 = string
-    sku                   = string
-    version               = string
-    
-  }))
-}
-
 module "nic" {
   source = "./modules/nic"
   nics   = var.nics
 
 }
 
-variable "nics" {
-  type = map(object({
-    name         = string
-    location     = string
-    rg           = string
-    ipconfigname = string
-    subnetid     = string
-    privip       = string
-    pubip        = string
-  }))
-}
-
 module "ip" {
   source = "./modules/ip"
   ips    = var.ips
 
-}
-
-variable "ips" {
-  type = map(object({
-    name     = string
-    location = string
-    rg       = string
-    method   = string
-    sku      = string
-  }))
 }
 
 resource "azurerm_resource_group" "vm" {
