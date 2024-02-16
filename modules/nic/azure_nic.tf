@@ -1,12 +1,12 @@
 variable "nics" {
   type = map(object({
-    name                            = string
-    location                        = string
-    resource_group_name             = string
-    ipconfigname                    = string
-    subnet_id                       = string
-    private_ip_address_allocation   = string
-    public_ip_address_id            = string
+    name         = string
+    location     = string
+    rg           = string
+    ipconfigname = string
+    subnetid     = string
+    privip       = string
+    pubip        = string
   }))
 }
 

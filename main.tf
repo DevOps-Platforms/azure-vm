@@ -12,24 +12,21 @@ module "vm" {
 variable "vms" {
   type = map(object({
     name                  = string
-    resource_group_name   = string
+    rg                    = string
     location              = string
     size                  = number
-    admin_username        = string
-    network_interface_ids = string
-    node_count            = number
-    resource_name         = string
-    username              = string
-    public_key            = string
+    adminuser             = string
+    nicname               = string
+    ssh                   = string
     caching               = string
-    disk_size_gb          = number
+    diskgb                = number
     diskname              = string
-    storage_account_type  = string
+    storagetipe           = string
     publisher             = string
     offer                 = string
     sku                   = string
     version               = string
-
+    
   }))
 }
 
@@ -41,13 +38,13 @@ module "nic" {
 
 variable "nics" {
   type = map(object({
-    name                          = string
-    location                      = string
-    resource_group_name           = string
-    ipconfigname                  = string
-    subnet_id                     = string
-    private_ip_address_allocation = string
-    public_ip_address_id          = string
+    name         = string
+    location     = string
+    rg           = string
+    ipconfigname = string
+    subnetid     = string
+    privip       = string
+    pubip        = string
   }))
 }
 
@@ -59,11 +56,11 @@ module "ip" {
 
 variable "ips" {
   type = map(object({
-    name                = string
-    location            = string
-    resource_group_name = string
-    allocation_method   = string
-    sku                 = string
+    name     = string
+    location = string
+    rg       = string
+    method   = string
+    sku      = string
   }))
 }
 
