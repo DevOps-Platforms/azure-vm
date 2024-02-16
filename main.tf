@@ -11,13 +11,13 @@ module "vms" {
 
 module "nics" {
   source   = "./modules/nic"
-  vms = var.nics
+  nics = var.nics
 
 }
 
 module "ips" {
   source   = "./modules/ip"
-  vms = var.ips
+  ips = var.ips
 
 }
 
