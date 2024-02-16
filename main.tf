@@ -3,79 +3,102 @@ provider "azurerm" {
   features {}
 }
 
+module "vms" {
+  source   = "./modules/vm"
+  vms = var.vms
+
+}
+
+variable "vms" {
+  type = map(object({
+    name         = string
+    resource_group_name   = string
+    location              = string
+    size     = number
+    admin_username  = string
+    network_interface_ids = string
+    node_count   = number
+    resource_name = string
+    admin_ssh_key {
+      username   = string
+      public_key = string
+    }
+    os_disk {
+      caching              = string
+      disk_size_gb         = number
+      name                 = string
+      storage_account_type = string
+    }
+    source_image_reference {
+      publisher = string
+      offer     = string
+      sku       = string
+      version   = string
+    }
+  }))
+}
+
+module "nics" {
+  source   = "./modules/nic"
+  vms = var.nics
+
+}
+
+variable "nics" {
+  type = map(object({
+    name                            = string
+    location                        = string
+    resource_group_name             = string
+    ip_configuration {
+      name                          = string
+      subnet_id                     = string
+      private_ip_address_allocation = string
+      public_ip_address_id          = string
+    }
+  }))
+}
+
+module "ips" {
+  source   = "./modules/ip"
+  vms = var.ips
+
+}
+
+variable "ips" {
+  type = map(object({
+    name                = string
+    location            = string
+    resource_group_name = string
+    allocation_method   = string
+    sku                 = string
+  }))
+}
+
 resource "azurerm_resource_group" "vm" {
-  name     = "lab_vm"
-  location = "East US"
+  name     = var.rg_name
+  location = var.rg_location
   }
 
 
 resource "azurerm_virtual_network" "vm-network" {
-  name                = "vm-network"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.vm.location
-  resource_group_name = azurerm_resource_group.vm.name
+  name                = var.vnet_name
+  address_space       = [var.vnet_address_space]
+  location            = var.rg_location
+  resource_group_name = var.rg_name
 }
 
-
-resource "azurerm_subnet" "bastion" {
-  name                 = "AzureBastionSubnet"
-  resource_group_name  = azurerm_resource_group.vm.name
-  virtual_network_name = azurerm_virtual_network.vm-network.name
-  address_prefixes     = ["10.0.1.0/24"]
-}
 
 resource "azurerm_subnet" "general" {
-  name                 = "vm-linux-lab-subnet"
-  resource_group_name  = azurerm_resource_group.vm.name
-  virtual_network_name = azurerm_virtual_network.vm-network.name
-  address_prefixes     = ["10.0.2.0/24"]
-}
-
-
-resource "azurerm_linux_virtual_machine" "vm" {
-  count                 = 3
-  name                  = "linux-vm-${count.index}"
-  resource_group_name   = azurerm_resource_group.vm.name
-  location              = azurerm_resource_group.vm.location
-  size                  = "Standard_DS1_v2"
-  admin_username        = var.DEVOPS_AZURE_ADMIN_USER
-  network_interface_ids = [azurerm_network_interface.nic[count.index].id]
-  admin_ssh_key {
-    username   = var.DEVOPS_AZURE_ADMIN_USER
-    public_key = var.DEVOPS_AZURE_PUBLIC_SSH
-  }
-   os_disk {
-    caching              = "ReadWrite"
-    disk_size_gb         = 30
-    name                 = "linux_vm_lab-${count.index}"
-    storage_account_type = "Standard_LRS"
-  }
-   source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-}
-
-
-resource "azurerm_network_interface" "nic" {
-  count               = 3
-  name                = "linux-vm-nic-${count.index}"
-  location            = azurerm_resource_group.vm.location
-  resource_group_name = azurerm_resource_group.vm.name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.general.id
-    private_ip_address_allocation = "Dynamic"
-  }
+  name                 = var.subnet_name
+  resource_group_name  = var.rg_name
+  virtual_network_name = var.vnet_name
+  address_prefixes     = [var.subnet_address_prefix]
 }
 
 resource "azurerm_network_security_group" "nsg" {
   name                = "vms-linux-nsg"
-  location            = azurerm_resource_group.vm.location
-  resource_group_name = azurerm_resource_group.vm.name
+  location            = var.rg_location
+  resource_group_name = var.rg_name
 
   security_rule {
     name                       = "allow_all"
@@ -94,29 +117,4 @@ resource "azurerm_network_security_group" "nsg" {
 resource "azurerm_subnet_network_security_group_association" "nsga" {
   subnet_id                 = azurerm_subnet.general.id
   network_security_group_id = azurerm_network_security_group.nsg.id
-}
-
-resource "azurerm_public_ip" "bastion_ip" {
-  name                = "bastion-vm-linux"
-  location            = azurerm_resource_group.vm.location
-  resource_group_name = azurerm_resource_group.vm.name
-  allocation_method   = "Static"
-  sku                 = "Standard"
-}
-
-resource "azurerm_bastion_host" "bastion_host" {
-  name                = "bastion-host-vm-linux"
-  location            = azurerm_resource_group.vm.location
-  resource_group_name = azurerm_resource_group.vm.name
-  sku                 = "Standard"
-  tunneling_enabled   = true
-
-  ip_configuration {
-    name                 = "configuration"
-    subnet_id            = azurerm_subnet.bastion.id
-    public_ip_address_id = azurerm_public_ip.bastion_ip.id
-  }
-  depends_on = [
-    azurerm_subnet.bastion,
-  ]
 }
