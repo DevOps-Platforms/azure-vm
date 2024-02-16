@@ -8,6 +8,7 @@ module "vms" {
   vms = var.vms
 
 }
+
 variable "vms" {
   type = map(object({
     name                  = string
@@ -37,6 +38,7 @@ module "nics" {
   nics = var.nics
 
 }
+
 variable "nics" {
   type = map(object({
     name                            = string

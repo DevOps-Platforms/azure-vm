@@ -53,3 +53,46 @@ vms = {
     version     = "latest"
     }
 }
+
+nics = {
+
+    1 = {
+    name             = "nic-jump-box"
+    location         = var.rg_location
+    rg               = var.rg_name
+    ipconfigname     = "internal"
+    subnetid         = var.subnet_name
+    privip           = "Dynamic"
+    pubip           = var.public_ip
+    }
+
+    2 = { 
+    name             = "nic-0"
+    location         = var.rg_location
+    rg               = var.rg_name
+    ipconfigname     = "internal"
+    subnetid         = var.subnet_name
+    privip           = "Dynamic"
+    pubip           = null
+   }
+
+   3 = { 
+    name             = "nic-1"
+    location         = var.rg_location
+    rg               = var.rg_name
+    ipconfigname     = "internal"
+    subnetid         = var.subnet_name
+    privip           = "Dynamic"
+    pubip           = null
+   }
+}
+
+ips = {
+    1 ={
+    name     = "linux-jump-ip"
+    location = var.rg_location
+    rg       = var.rg_name
+    method   = "Static"
+    sky      = "Standard"
+    }
+}
