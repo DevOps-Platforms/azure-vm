@@ -7,7 +7,7 @@ nics = {
     ipconfigname     = "internal"
     subnetid         = var.subnet_name
     privip           = "Dynamic"
-    privip           = var.public_ip
+    pubip           = var.public_ip
     }
 
     2 = { 
@@ -17,7 +17,7 @@ nics = {
     ipconfigname     = "internal"
     subnetid         = var.subnet_name
     privip           = "Dynamic"
-    privip           = null
+    pubip           = null
    }
 
    3 = { 
@@ -27,6 +27,6 @@ nics = {
     ipconfigname     = "internal"
     subnetid         = var.subnet_name
     privip           = "Dynamic"
-    privip           = null
+    pubip           = null
    }
 }
