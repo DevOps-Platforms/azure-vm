@@ -11,30 +11,25 @@ module "vms" {
 
 variable "vms" {
   type = map(object({
-    name         = string
+    name                  = string
     resource_group_name   = string
     location              = string
-    size     = number
-    admin_username  = string
+    size                  = number
+    admin_username        = string
     network_interface_ids = string
-    node_count   = number
-    resource_name = string
-    admin_ssh_key {
-      username   = string
-      public_key = string
-    }
-    os_disk {
-      caching              = string
-      disk_size_gb         = number
-      name                 = string
-      storage_account_type = string
-    }
-    source_image_reference {
-      publisher = string
-      offer     = string
-      sku       = string
-      version   = string
-    }
+    node_count            = number
+    resource_name         = string
+    username              = string
+    public_key            = string
+    caching               = string
+    disk_size_gb          = number
+    diskname              = string
+    storage_account_type  = string
+    publisher             = string
+    offer                 = string
+    sku                   = string
+    version               = string
+    
   }))
 }
 
@@ -49,12 +44,10 @@ variable "nics" {
     name                            = string
     location                        = string
     resource_group_name             = string
-    ip_configuration {
-      name                          = string
-      subnet_id                     = string
-      private_ip_address_allocation = string
-      public_ip_address_id          = string
-    }
+    ipconfigname                    = string
+    subnet_id                       = string
+    private_ip_address_allocation   = string
+    public_ip_address_id            = string
   }))
 }
 
