@@ -8,17 +8,61 @@ module "vms" {
   vms = var.vms
 
 }
+variable "vms" {
+  type = map(object({
+    name                  = string
+    resource_group_name   = string
+    location              = string
+    size                  = number
+    admin_username        = string
+    network_interface_ids = string
+    node_count            = number
+    resource_name         = string
+    username              = string
+    public_key            = string
+    caching               = string
+    disk_size_gb          = number
+    diskname              = string
+    storage_account_type  = string
+    publisher             = string
+    offer                 = string
+    sku                   = string
+    version               = string
+    
+  }))
+}
 
 module "nics" {
   source   = "./modules/nic"
   nics = var.nics
 
 }
+variable "nics" {
+  type = map(object({
+    name                            = string
+    location                        = string
+    resource_group_name             = string
+    ipconfigname                    = string
+    subnet_id                       = string
+    private_ip_address_allocation   = string
+    public_ip_address_id            = string
+  }))
+}
 
 module "ips" {
   source   = "./modules/ip"
   ips = var.ips
 
+}
+
+variable "ips" {
+  type = map(object({
+    name                = string
+    location            = string
+    resource_group_name = string
+    allocation_method   = string
+    sku                 = string
+  }))
 }
 
 resource "azurerm_resource_group" "vm" {
