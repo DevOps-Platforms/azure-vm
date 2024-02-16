@@ -3,7 +3,7 @@ provider "azurerm" {
   features {}
 }
 
-module "vms" {
+module "vm" {
   source   = "./modules/vm"
   vms = var.vms
 
@@ -33,7 +33,7 @@ variable "vms" {
   }))
 }
 
-module "nics" {
+module "nic" {
   source   = "./modules/nic"
   nics = var.nics
 
@@ -51,7 +51,7 @@ variable "nics" {
   }))
 }
 
-module "ips" {
+module "ip" {
   source   = "./modules/ip"
   ips = var.ips
 
