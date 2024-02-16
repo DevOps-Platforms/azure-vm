@@ -1,5 +1,5 @@
 vms = {
-    1 = {
+  1 = {
     name        = "linux-jump-box"
     rg          = var.rg_name
     Location    = var.rg_location
@@ -15,9 +15,9 @@ vms = {
     offer       = "UbuntuServer"
     sku         = "16.04-LTS"
     version     = "latest"
-    }
+  }
 
-    2 = {
+  2 = {
     name        = "linux-0"
     rg          = var.rg_name
     Location    = var.rg_location
@@ -33,9 +33,9 @@ vms = {
     offer       = "UbuntuServer"
     sku         = "16.04-LTS"
     version     = "latest"
-    }
+  }
 
-    3 = {
+  3 = {
     name        = "linux-1"
     rg          = var.rg_name
     Location    = var.rg_location
@@ -51,48 +51,48 @@ vms = {
     offer       = "UbuntuServer"
     sku         = "16.04-LTS"
     version     = "latest"
-    }
+  }
 }
 
 nics = {
 
-    1 = {
-    name             = "nic-jump-box"
-    location         = var.rg_location
-    rg               = var.rg_name
-    ipconfigname     = "internal"
-    subnetid         = var.subnet_name
-    privip           = "Dynamic"
-    pubip           = var.public_ip
-    }
+  1 = {
+    name         = "nic-jump-box"
+    location     = var.rg_location
+    rg           = var.rg_name
+    ipconfigname = "internal"
+    subnetid     = var.subnet_name
+    privip       = "Dynamic"
+    pubip        = var.public_ip
+  }
 
-    2 = { 
-    name             = "nic-0"
-    location         = var.rg_location
-    rg               = var.rg_name
-    ipconfigname     = "internal"
-    subnetid         = var.subnet_name
-    privip           = "Dynamic"
-    pubip           = null
-   }
+  2 = {
+    name         = "nic-0"
+    location     = var.rg_location
+    rg           = var.rg_name
+    ipconfigname = "internal"
+    subnetid     = var.subnet_name
+    privip       = "Dynamic"
+    pubip        = null
+  }
 
-   3 = { 
-    name             = "nic-1"
-    location         = var.rg_location
-    rg               = var.rg_name
-    ipconfigname     = "internal"
-    subnetid         = var.subnet_name
-    privip           = "Dynamic"
-    pubip           = null
-   }
+  3 = {
+    name         = "nic-1"
+    location     = var.rg_location
+    rg           = var.rg_name
+    ipconfigname = "internal"
+    subnetid     = var.subnet_name
+    privip       = "Dynamic"
+    pubip        = null
+  }
 }
 
 ips = {
-    1 ={
+  1 = {
     name     = "linux-jump-ip"
     location = var.rg_location
     rg       = var.rg_name
     method   = "Static"
     sky      = "Standard"
-    }
+  }
 }

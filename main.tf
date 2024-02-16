@@ -4,8 +4,8 @@ provider "azurerm" {
 }
 
 module "vm" {
-  source   = "./modules/vm"
-  vms = var.vms
+  source = "./modules/vm"
+  vms    = var.vms
 
 }
 
@@ -29,31 +29,31 @@ variable "vms" {
     offer                 = string
     sku                   = string
     version               = string
-    
+
   }))
 }
 
 module "nic" {
-  source   = "./modules/nic"
-  nics = var.nics
+  source = "./modules/nic"
+  nics   = var.nics
 
 }
 
 variable "nics" {
   type = map(object({
-    name                            = string
-    location                        = string
-    resource_group_name             = string
-    ipconfigname                    = string
-    subnet_id                       = string
-    private_ip_address_allocation   = string
-    public_ip_address_id            = string
+    name                          = string
+    location                      = string
+    resource_group_name           = string
+    ipconfigname                  = string
+    subnet_id                     = string
+    private_ip_address_allocation = string
+    public_ip_address_id          = string
   }))
 }
 
 module "ip" {
-  source   = "./modules/ip"
-  ips = var.ips
+  source = "./modules/ip"
+  ips    = var.ips
 
 }
 
@@ -70,7 +70,7 @@ variable "ips" {
 resource "azurerm_resource_group" "vm" {
   name     = var.rg_name
   location = var.rg_location
-  }
+}
 
 
 resource "azurerm_virtual_network" "vm-network" {
