@@ -4,9 +4,9 @@ variable "vms" {
     rg                    = string
     location              = string
     size                  = string
-    adminuser             = string
+    adminuser             = var.admin_username
     nicname               = string
-    ssh                   = string
+    ssh                   = var.public_key
     caching               = string
     diskgb                = number
     diskname              = string
@@ -28,7 +28,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_username        = var.admin_username
   network_interface_ids = [azurerm_network_interface.nic[each.key].id]
   admin_ssh_key {
-    username   = var.username
+    username   = var.admin_username
     public_key = var.public_key
   }
    os_disk {

@@ -6,7 +6,6 @@ provider "azurerm" {
 module "azure" {
   source = "./modules/azure/"
   admin_username = var.DEVOPS_AZURE_ADMIN_USER
-  username       = var.DEVOPS_AZURE_ADMIN_USER
   public_key     = var.DEVOPS_AZURE_PUBLIC_SSH
   vms            = var.vms
   nics           = var.nics
@@ -19,9 +18,9 @@ variable "vms" {
     rg                    = string
     location              = string
     size                  = string
-    adminuser             = string
+    adminuser             = var.admin_username
     nicname               = string
-    ssh                   = string
+    ssh                   = var.public_key 
     caching               = string
     diskgb                = number
     diskname              = string
