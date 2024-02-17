@@ -9,6 +9,7 @@ variable "ips" {
 }
 
 resource "azurerm_public_ip" "ips" {
+  for_each = var.ips
   name                = each.value.name
   location            = each.value.location
   resource_group_name = each.value.rg

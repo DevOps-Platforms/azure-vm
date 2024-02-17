@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = each.value.ipconfigname
-    subnet_id                     = each.value.subnetid
+    subnet_id                     = azurerm_subnet.general.id
     private_ip_address_allocation = each.value.privip
     public_ip_address_id          = each.value.pubip
   }

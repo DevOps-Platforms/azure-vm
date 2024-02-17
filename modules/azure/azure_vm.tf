@@ -3,7 +3,7 @@ variable "vms" {
     name                  = string
     rg                    = string
     location              = string
-    size                  = number
+    size                  = string
     adminuser             = string
     nicname               = string
     ssh                   = string
@@ -25,11 +25,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
   resource_group_name   = each.value.rg
   location              = each.value.location
   size                  = each.value.size
-  admin_username        = each.value.adminuser
-  network_interface_ids = each.value.nicname
+  admin_username        = var.DEVOPS_AZURE_ADMIN_USER
+  network_interface_ids = [azurerm_network_interface.nic[each.key].id]
   admin_ssh_key {
-    username   = each.value.adminuser
-    public_key = each.value.ssh
+    username   = var.DEVOPS_AZURE_ADMIN_USER
+    public_key = var.DEVOPS_AZURE_PUBLIC_SSH
   }
    os_disk {
     caching              = each.value.caching
