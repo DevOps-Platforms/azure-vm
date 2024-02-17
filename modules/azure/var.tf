@@ -1,10 +1,10 @@
-variable "DEVOPS_AZURE_ADMIN_USER" {
+variable "admin_username" {
   description = "Admin username"
   type        = string
   default     = null
 }
 
-variable "DEVOPS_AZURE_PUBLIC_SSH" {
+variable "public_key" {
   description = "Public SSH key"
   type        = string
   default     = null
