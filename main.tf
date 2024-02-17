@@ -4,7 +4,7 @@ provider "azurerm" {
 }
 
 module "azure" {
-  source = "./modules/azure/*"
+  source = "./modules/azure/azure_vm.tf"
   vms  = var.vms
   nics = var.nics
   ips  = var.ips
