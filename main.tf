@@ -5,8 +5,8 @@ provider "azurerm" {
 
 module "azure" {
   source = "./modules/azure/"
-  adminuser = var.DEVOPS_AZURE_ADMIN_USER
-  ssh = var.DEVOPS_AZURE_PUBLIC_SSH
+  DEVOPS_AZURE_ADMIN_USER = var.DEVOPS_AZURE_ADMIN_USER
+  DEVOPS_AZURE_PUBLIC_SSH = var.DEVOPS_AZURE_PUBLIC_SSH
   vms            = var.vms
   nics           = var.nics
   ips            = var.ips
