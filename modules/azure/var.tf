@@ -10,7 +10,6 @@ variable "DEVOPS_AZURE_PUBLIC_SSH" {
   default     = ""
 }
 
-
 variable "rg_location" {
   description = "Location/Region of Resources"
   type        = string
