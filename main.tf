@@ -3,6 +3,18 @@ provider "azurerm" {
   features {}
 }
 
+variable "admin_username" {
+  description = "Admin username"
+  type        = string
+  default     = null
+}
+
+variable "public_key" {
+  description = "Public SSH key"
+  type        = string
+  default     = null
+}
+
 module "azure" {
   source = "./modules/azure/"
   admin_username = var.DEVOPS_AZURE_ADMIN_USER
