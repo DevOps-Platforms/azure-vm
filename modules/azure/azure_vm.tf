@@ -4,9 +4,9 @@ variable "vms" {
     rg                    = string
     location              = string
     size                  = string
-    adminuser             = var.admin_username
+    adminuser             = string
     nicname               = string
-    ssh                   = var.public_key
+    ssh                   = string
     caching               = string
     diskgb                = number
     diskname              = string
