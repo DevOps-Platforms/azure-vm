@@ -56,3 +56,4 @@ resource "azurerm_public_ip" "ips" {
   allocation_method   = "Static"
   sku                 = "Standard"
 }
+
