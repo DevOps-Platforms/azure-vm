@@ -11,8 +11,11 @@ variable "nics" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  depends_on = [azurerm_resource_group.vm]
-  depends_on = [azurerm_public_ip.ips]
+  depends_on = [
+    azurerm_resource_group.vm, 
+    azurerm_public_ip.ips
+  ]
+  
   for_each = var.nics
   name                            = each.value.name
   location                        = each.value.location

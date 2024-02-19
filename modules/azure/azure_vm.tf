@@ -20,8 +20,10 @@ variable "vms" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  depends_on = [azurerm_resource_group.vm]
-  depends_on = [azurerm_network_interface.nic]
+  depends_on = [
+    azurerm_resource_group.vm,
+    azurerm_network_interface.nic
+  ]
   for_each = var.vms
   name                  = each.value.name
   resource_group_name   = each.value.rg

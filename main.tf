@@ -4,12 +4,12 @@ provider "azurerm" {
 }
 
 module "azure" {
-  source = "./modules/azure/"
+  source                  = "./modules/azure/"
   DEVOPS_AZURE_ADMIN_USER = var.DEVOPS_AZURE_ADMIN_USER
   DEVOPS_AZURE_PUBLIC_SSH = var.DEVOPS_AZURE_PUBLIC_SSH
-  vms            = var.vms
-  nics           = var.nics
-  ips            = var.ips
+  vms                     = var.vms
+  nics                    = var.nics
+  ips                     = var.ips
 }
 
 variable "DEVOPS_AZURE_ADMIN_USER" {
@@ -26,22 +26,22 @@ variable "DEVOPS_AZURE_PUBLIC_SSH" {
 
 variable "vms" {
   type = map(object({
-    name                  = string
-    rg                    = string
-    location              = string
-    size                  = string
-    adminuser             = string
-    nicname               = string
-    ssh                   = string 
-    caching               = string
-    diskgb                = number
-    diskname              = string
-    storagetipe           = string
-    publisher             = string
-    offer                 = string
-    sku                   = string
-    version               = string
-    
+    name        = string
+    rg          = string
+    location    = string
+    size        = string
+    adminuser   = string
+    nicname     = string
+    ssh         = string
+    caching     = string
+    diskgb      = number
+    diskname    = string
+    storagetipe = string
+    publisher   = string
+    offer       = string
+    sku         = string
+    version     = string
+
   }))
 }
 
