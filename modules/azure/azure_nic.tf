@@ -6,7 +6,6 @@ variable "nics" {
     ipconfigname = string
     subnetid     = string
     privip       = string
-    pubip        = string
   }))
 }
 
@@ -25,6 +24,6 @@ resource "azurerm_network_interface" "nic" {
     name                          = each.value.ipconfigname
     subnet_id                     = azurerm_subnet.general.id
     private_ip_address_allocation = each.value.privip
-    public_ip_address_id          = each.value.pubip
+    public_ip_address_id          = [azurerm_public_ip.ips[each.key].id]
   }
 }
