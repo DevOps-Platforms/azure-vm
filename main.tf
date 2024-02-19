@@ -53,6 +53,7 @@ variable "nics" {
     ipconfigname = string
     subnetid     = string
     privip       = string
+    pubip        = string
   }))
 }
 

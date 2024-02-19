@@ -7,7 +7,7 @@ nics = {
     ipconfigname = "internal"
     subnetid     = "vm-linux-subnet"
     privip       = "Dynamic"
-    pubip        = ""
+    pubip        = "linux-jump-ip"
   }
 
   2 = {
