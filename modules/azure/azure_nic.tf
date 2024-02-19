@@ -43,7 +43,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = azurerm_subnet.general.id
     private_ip_address_allocation = each.value.privip
     
-    public_ip_address_id = can(var.ips[each.key]) && can(azurerm_public_ip.ips[each.key]) ? azurerm_public_ip.ips[each.key].id : null
+    public_ip_address_id = can(azurerm_public_ip.ips[each.key]) ? azurerm_public_ip.ips[each.key].id : null
   }
 }
 
