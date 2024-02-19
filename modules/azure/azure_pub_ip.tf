@@ -9,6 +9,7 @@ variable "ips" {
 }
 
 resource "azurerm_public_ip" "ips" {
+  depends_on = [azurerm_resource_group.vm]
   for_each = var.ips
   name                = each.value.name
   location            = each.value.location

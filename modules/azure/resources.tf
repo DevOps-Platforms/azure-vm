@@ -4,6 +4,7 @@ resource "azurerm_resource_group" "vm" {
 }
 
 resource "azurerm_virtual_network" "vm-network" {
+  depends_on = [azurerm_resource_group.vm]
   name                = var.vnet_name
   address_space       = [var.vnet_address_space]
   location            = var.rg_location
@@ -11,6 +12,7 @@ resource "azurerm_virtual_network" "vm-network" {
 }
 
 resource "azurerm_subnet" "general" {
+  depends_on = [azurerm_virtual_network.vm-network]
   name                 = var.subnet_name
   resource_group_name  = var.rg_name
   virtual_network_name = var.vnet_name
@@ -18,6 +20,8 @@ resource "azurerm_subnet" "general" {
 }
 
 resource "azurerm_network_security_group" "nsg" {
+  depends_on = [azurerm_resource_group.vm]
+
   name                = "vms-linux-nsg"
   location            = var.rg_location
   resource_group_name = var.rg_name
@@ -36,6 +40,8 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsga" {
+  depends_on = [azurerm_subnet.general]
+  depends_on = [azurerm_network_security_group.nsg]
   subnet_id                 = azurerm_subnet.general.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }

@@ -11,6 +11,8 @@ variable "nics" {
 }
 
 resource "azurerm_network_interface" "nic" {
+  depends_on = [azurerm_resource_group.vm]
+  depends_on = [azurerm_public_ip.ips]
   for_each = var.nics
   name                            = each.value.name
   location                        = each.value.location
@@ -20,6 +22,6 @@ resource "azurerm_network_interface" "nic" {
     name                          = each.value.ipconfigname
     subnet_id                     = azurerm_subnet.general.id
     private_ip_address_allocation = each.value.privip
-    public_ip_address_id          = each.value.pubip
+    public_ip_address_id          = [azurerm_public_ip.ips[each.key].id]
   }
 }
