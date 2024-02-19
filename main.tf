@@ -56,13 +56,13 @@ variable "nics" {
   }))
 }
 
-variable "ips" {
-  type = map(object({
-    name     = string
-    location = string
-    rg       = string
-    method   = string
-    sku      = string
-  }))
-}
+# variable "ips" {
+#   type = map(object({
+#     name     = string
+#     location = string
+#     rg       = string
+#     method   = string
+#     sku      = string
+#   }))
+# }
 
