@@ -9,7 +9,6 @@ module "azure" {
   DEVOPS_AZURE_PUBLIC_SSH = var.DEVOPS_AZURE_PUBLIC_SSH
   vms                     = var.vms
   nics                    = var.nics
-  ips                     = var.ips
 }
 
 variable "DEVOPS_AZURE_ADMIN_USER" {
