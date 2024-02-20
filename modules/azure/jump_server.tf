@@ -47,18 +47,14 @@ resource "azurerm_network_interface_security_group_association" "nsga-jump-serve
 resource "azurerm_linux_virtual_machine" "jump_server" {
   depends_on = [
     azurerm_resource_group.vm,
-    azurerm_network_interface.nic-jump,
-    azurerm_network_interface.nic-jump-port-22
+    azurerm_network_interface.nic-jump
   ]
   name                  = "linux-jump-server"
   resource_group_name   = azurerm_resource_group.vm.name
   location              = azurerm_resource_group.vm.location
   size                  = "Standard_DS1_v2"
   admin_username        = var.DEVOPS_AZURE_ADMIN_USER
-  network_interface_ids = [
-    azurerm_network_interface.nic-jump-port-22.id,
-    azurerm_network_interface.nic-jump.id
-    ]
+  network_interface_ids = [azurerm_network_interface.nic-jump.id]
   admin_ssh_key {
     username   = var.DEVOPS_AZURE_ADMIN_USER
     public_key = var.DEVOPS_AZURE_PUBLIC_SSH
