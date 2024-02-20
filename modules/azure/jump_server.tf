@@ -28,7 +28,7 @@ resource "azurerm_network_security_group" "nsg-jump-server" {
 
   security_rule {
     name                       = "SSH"
-    priority                   = 1001
+    priority                   = 300
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
