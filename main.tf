@@ -55,17 +55,6 @@ variable "vms" {
   }))
 }
 
-variable "nics" {
-  type = map(object({
-    name         = string
-    location     = string
-    rg           = string
-    ipconfigname = string
-    subnetid     = string
-    privip       = string
-  }))
-}
-
 # variable "ips" {
 #   type = map(object({
 #     name     = string
