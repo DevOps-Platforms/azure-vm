@@ -35,7 +35,7 @@ resource "azurerm_linux_virtual_machine" "jump_server" {
   location              = azurerm_resource_group.vm.location
   size                  = "Standard_DS1_v2"
   admin_username        = var.DEVOPS_AZURE_ADMIN_USER
-  network_interface_ids = azurerm_network_interface.nic-jump.id
+  network_interface_ids = [azurerm_network_interface.nic-jump.id]
   admin_ssh_key {
     username   = var.DEVOPS_AZURE_ADMIN_USER
     public_key = var.DEVOPS_AZURE_PUBLIC_SSH
