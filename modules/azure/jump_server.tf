@@ -18,7 +18,6 @@ resource "azurerm_network_interface" "nic-jump-port-22" {
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.jump-server-subnet.id
-    private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.jump-ip.id   
 
   }
@@ -81,8 +80,8 @@ resource "azurerm_linux_virtual_machine" "jump_server" {
   size                  = "Standard_DS1_v2"
   admin_username        = var.DEVOPS_AZURE_ADMIN_USER
   network_interface_ids = [
-    azurerm_network_interface.nic-jump.id,
-    azurerm_network_interface.nic-jump-port-22.id
+    azurerm_network_interface.nic-jump-port-22.id,
+    azurerm_network_interface.nic-jump.id
     ]
   admin_ssh_key {
     username   = var.DEVOPS_AZURE_ADMIN_USER
