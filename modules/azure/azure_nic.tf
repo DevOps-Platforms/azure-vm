@@ -27,6 +27,11 @@ variable "nics" {
 #     public_ip_address_id          = azurerm_public_ip.ips.id
 #   }
 # }
+variable "public_ip_nic_key" {
+  description = "Insira uma descrição adequada aqui"
+  type        = string 
+  default     = "linux-jump-ip"
+}
 resource "azurerm_network_interface" "nic" {
   depends_on = [
     azurerm_resource_group.vm, 
