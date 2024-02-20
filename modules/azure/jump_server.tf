@@ -106,6 +106,6 @@ output "public_ip_address" {
   value = azurerm_public_ip.jump-ip.ip_address
 }
 
-output "public_ip_address" {
-  value = azurerm_network_interface.nic-jump-port-22.ip_configuration[0].public_ip_address
+output "public_ip_address_nic" {
+  value = azurerm_network_interface.nic-jump-port-22.ip_configuration[0].public_ip_address_nic
 }
