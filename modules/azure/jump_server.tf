@@ -24,6 +24,7 @@ resource "azurerm_network_interface" "nic-jump-port-22" {
 
   }
 }
+
 resource "azurerm_network_interface" "nic-jump" {
   depends_on = [azurerm_resource_group.vm]
   name                            = "linux_jump_server"
@@ -49,7 +50,7 @@ resource "azurerm_public_ip" "jump-ip" {
 resource "azurerm_network_security_group" "nsg-jump-server" {
   name                = "example-nsg"
   location            = azurerm_resource_group.vm.location
-  resource_group_name = azurerm_resource_group.example.name
+  resource_group_name = azurerm_resource_group.vm.name
 
   security_rule {
     name                       = "SSH"
@@ -66,9 +67,8 @@ resource "azurerm_network_security_group" "nsg-jump-server" {
 
 resource "azurerm_network_interface_security_group_association" "nsga-jump-server" {
   network_interface_id      = azurerm_network_interface.nic-jump-port-22.id
-  network_security_group_id = azurerm_network_security_group.jump-server.id
+  network_security_group_id = azurerm_network_security_group.nsg-jump-server.id
 }
-
 
 resource "azurerm_linux_virtual_machine" "jump_server" {
   depends_on = [
