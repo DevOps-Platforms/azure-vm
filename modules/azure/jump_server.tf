@@ -48,7 +48,7 @@ resource "azurerm_public_ip" "jump-ip" {
 }
 
 resource "azurerm_network_security_group" "nsg-jump-server" {
-  name                = "example-nsg"
+  name                = "nsg-jump-server"
   location            = azurerm_resource_group.vm.location
   resource_group_name = azurerm_resource_group.vm.name
 
@@ -73,7 +73,8 @@ resource "azurerm_network_interface_security_group_association" "nsga-jump-serve
 resource "azurerm_linux_virtual_machine" "jump_server" {
   depends_on = [
     azurerm_resource_group.vm,
-    azurerm_network_interface.nic-jump
+    azurerm_network_interface.nic-jump,
+    azurerm_network_interface.nic-jump-port-22
   ]
   name                  = "linux-jump-server"
   resource_group_name   = azurerm_resource_group.vm.name
