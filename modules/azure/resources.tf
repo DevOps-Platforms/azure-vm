@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "vm" {
 
 resource "azurerm_public_ip" "ips" {
   depends_on = [azurerm_resource_group.vm]
-  name                = "linux-jump-ip"
+  name                = var.public_ip_name
   location            = azurerm_resource_group.vm.location
   resource_group_name = azurerm_resource_group.vm.name
   allocation_method   = "Static"

@@ -46,8 +46,8 @@ variable "subnet_address_prefix" {
   default     = "10.0.2.0/24"
 }
 
-variable "public_ip" {
-  description = "Prefix of Subnet"
+variable "public_ip_name" {
+  description = "Public IP name"
   type        = string
-  default     = "10.0.2.0/24"
+  default     = "linux-jump-ip"
 }
