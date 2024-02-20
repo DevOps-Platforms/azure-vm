@@ -18,6 +18,7 @@ resource "azurerm_network_interface" "nic-jump-port-22" {
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.jump-server-subnet.id
+    private_ip_address_allocation = null
     public_ip_address_id          = azurerm_public_ip.jump-ip.id   
 
   }
