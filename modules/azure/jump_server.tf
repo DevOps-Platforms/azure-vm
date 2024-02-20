@@ -1,3 +1,11 @@
+resource "azurerm_subnet" "jump_subnet" {
+  depends_on = [azurerm_virtual_network.vm-network]
+  name                 = "jump-subnet"
+  resource_group_name  = var.rg_name
+  virtual_network_name = var.vnet_name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
 resource "azurerm_network_interface" "nic-jump" {
   depends_on = [azurerm_resource_group.vm]
   name                            = "linux_jump_server"
@@ -6,7 +14,7 @@ resource "azurerm_network_interface" "nic-jump" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.general.id
+    subnet_id                     = azurerm_subnet.jump_subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.jump-ip.id  
   }
@@ -34,7 +42,7 @@ resource "azurerm_network_security_group" "nsg-jump-server" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "*"
+    source_address_prefix      = "170.231.253.91"
     destination_address_prefix = "*"
   }
 }
