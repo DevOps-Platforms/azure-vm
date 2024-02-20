@@ -1,8 +1,31 @@
-resource "azurerm_network_interface" "nic-jump" {
+resource "azurerm_subnet" "jump-server-subnet" {
+  depends_on = [azurerm_virtual_network.vm-network]
+  name                 = "jump-server-subnet"
+  resource_group_name  = var.rg_name
+  virtual_network_name = var.vnet_name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_network_interface" "nic-jump-port-22" {
   depends_on = [
     azurerm_resource_group.vm, 
     azurerm_public_ip.jump-ip
   ]
+  name                            = "linux_jump_server_port-22"
+  location                        = var.rg_location
+  resource_group_name             = var.rg_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.jump-server-subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.jump-ip.id
+    
+
+  }
+}
+resource "azurerm_network_interface" "nic-jump" {
+  depends_on = [azurerm_resource_group.vm]
   name                            = "linux_jump_server"
   location                        = var.rg_location
   resource_group_name             = var.rg_name
@@ -11,8 +34,6 @@ resource "azurerm_network_interface" "nic-jump" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.general.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.jump-ip.id
-
   }
 }
 
@@ -35,7 +56,10 @@ resource "azurerm_linux_virtual_machine" "jump_server" {
   location              = azurerm_resource_group.vm.location
   size                  = "Standard_DS1_v2"
   admin_username        = var.DEVOPS_AZURE_ADMIN_USER
-  network_interface_ids = [azurerm_network_interface.nic-jump.id]
+  network_interface_ids = [
+    azurerm_network_interface.nic-jump.id,
+    azurerm_network_interface.nic-jump-port-22.id
+    ]
   admin_ssh_key {
     username   = var.DEVOPS_AZURE_ADMIN_USER
     public_key = var.DEVOPS_AZURE_PUBLIC_SSH
@@ -55,5 +79,5 @@ resource "azurerm_linux_virtual_machine" "jump_server" {
 }
 
 output "public_jump_ip" {
-  value = azurerm_public_ip.jump-ip.ip_address
+  value = "${azurerm_public_ip.jump-ip.ip_address}"
 }
