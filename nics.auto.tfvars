@@ -1,17 +1,17 @@
 nics = {
 
   1 = {
-    name         = "nic-jump-box"
+    name         = "nic-1"
     location     = "East US"
     rg           = "lab_vm"
     ipconfigname = "internal"
     subnetid     = "vm-linux-subnet"
     privip       = "Dynamic"
-    pubip        = "linux-jump-ip"
+    pubip        = null
   }
 
   2 = {
-    name         = "nic-0"
+    name         = "nic-2"
     location     = "East US"
     rg           = "lab_vm"
     ipconfigname = "internal"
@@ -21,7 +21,7 @@ nics = {
   }
 
   3 = {
-    name         = "nic-1"
+    name         = "nic-3"
     location     = "East US"
     rg           = "lab_vm"
     ipconfigname = "internal"
