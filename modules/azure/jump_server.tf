@@ -25,7 +25,7 @@ resource "azurerm_public_ip" "jump-ip" {
   sku                 = "Standard"
 }
 
-resource "azurerm_linux_virtual_machine" "vm" {
+resource "azurerm_linux_virtual_machine" "jump_server" {
   depends_on = [
     azurerm_resource_group.vm,
     azurerm_network_interface.nic-jump
