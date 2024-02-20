@@ -19,8 +19,7 @@ resource "azurerm_network_interface" "nic-jump-port-22" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.jump-server-subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.jump-ip.id
-    
+    public_ip_address_id          = azurerm_public_ip.jump-ip.id   
 
   }
 }
@@ -103,6 +102,10 @@ resource "azurerm_linux_virtual_machine" "jump_server" {
   }
 }
 
-output "public_jump_ip" {
-  value = "${azurerm_public_ip.jump-ip.ip_address}"
+output "public_ip_address" {
+  value = azurerm_public_ip.jump-ip.ip_address
+}
+
+output "public_ip_address" {
+  value = azurerm_network_interface.nic-jump-port-22.ip_configuration[0].public_ip_address
 }
