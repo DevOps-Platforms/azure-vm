@@ -1,29 +1,3 @@
-resource "azurerm_subnet" "jump-server-subnet" {
-  depends_on = [azurerm_virtual_network.vm-network]
-  name                 = "jump-server-subnet"
-  resource_group_name  = var.rg_name
-  virtual_network_name = var.vnet_name
-  address_prefixes     = ["10.0.1.0/24"]
-}
-
-resource "azurerm_network_interface" "nic-jump-port-22" {
-  depends_on = [
-    azurerm_resource_group.vm, 
-    azurerm_public_ip.jump-ip
-  ]
-  name                            = "linux_jump_server_port-22"
-  location                        = var.rg_location
-  resource_group_name             = var.rg_name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.jump-server-subnet.id
-    private_ip_address_allocation = null
-    public_ip_address_id          = azurerm_public_ip.jump-ip.id   
-
-  }
-}
-
 resource "azurerm_network_interface" "nic-jump" {
   depends_on = [azurerm_resource_group.vm]
   name                            = "linux_jump_server"
@@ -34,6 +8,7 @@ resource "azurerm_network_interface" "nic-jump" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.general.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.jump-ip.id  
   }
 }
 
@@ -65,7 +40,7 @@ resource "azurerm_network_security_group" "nsg-jump-server" {
 }
 
 resource "azurerm_network_interface_security_group_association" "nsga-jump-server" {
-  network_interface_id      = azurerm_network_interface.nic-jump-port-22.id
+  network_interface_id      = azurerm_network_interface.nic-jump.id
   network_security_group_id = azurerm_network_security_group.nsg-jump-server.id
 }
 
