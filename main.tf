@@ -7,8 +7,8 @@ module "azure" {
   source                  = "./modules/azure/"
   DEVOPS_AZURE_ADMIN_USER = var.DEVOPS_AZURE_ADMIN_USER
   DEVOPS_AZURE_PUBLIC_SSH = var.DEVOPS_AZURE_PUBLIC_SSH
-  vms                     = var.vms
   nics                    = var.nics
+  vms                     = var.vms
 }
 
 variable "DEVOPS_AZURE_ADMIN_USER" {
@@ -21,6 +21,17 @@ variable "DEVOPS_AZURE_PUBLIC_SSH" {
   description = "Public SSH key"
   type        = string
   default     = null
+}
+
+variable "nics" {
+  type = map(object({
+    name         = string
+    location     = string
+    rg           = string
+    ipconfigname = string
+    subnetid     = string
+    privip       = string
+  }))
 }
 
 variable "vms" {
