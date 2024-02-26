@@ -47,7 +47,7 @@ resource "azurerm_network_security_group" "nsg-jump-server" {
   }
 
   security_rule {
-    name                       = "HTTP"
+    name                       = "inHTTP"
     priority                   = 301
     direction                  = "Inbound"
     access                     = "Allow"
@@ -59,7 +59,7 @@ resource "azurerm_network_security_group" "nsg-jump-server" {
   }
 
   security_rule {
-    name                       = "HTTP"
+    name                       = "outHTTP"
     priority                   = 301
     direction                  = "Outbound"
     access                     = "Allow"
