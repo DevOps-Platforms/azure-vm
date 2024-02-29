@@ -84,7 +84,7 @@ resource "azurerm_linux_virtual_machine" "jump_server" {
   name                  = "linux-jump-server"
   resource_group_name   = azurerm_resource_group.vm.name
   location              = azurerm_resource_group.vm.location
-  size                  = "Standard_D2s_v3"
+  size                  = "Standard_DS1_v2"
   admin_username        = var.DEVOPS_AZURE_ADMIN_USER
   network_interface_ids = [azurerm_network_interface.nic-jump.id]
   admin_ssh_key {
